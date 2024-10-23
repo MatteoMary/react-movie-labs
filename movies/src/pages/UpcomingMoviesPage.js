@@ -4,7 +4,7 @@ import { MoviesContext } from "../contexts/moviesContext";
 import { getUpcomingMovies } from "../api/tmdb-api";
 import PageTemplate from "../components/templateMovieListPage";
 import Spinner from "../components/spinner";
-import AddToPlaylistIcon from "../components/cardIcons/addToPlaylist";
+import AddToMustWatchIcon from "../components/cardIcons/addToMustWatch";
 
 const UpcomingMoviesPage = () => {
   const { upcomingMovies } = useContext(MoviesContext);
@@ -23,12 +23,16 @@ const UpcomingMoviesPage = () => {
 
   const movies = data.results;
 
+  const mustWatch = movies.filter(m => m.mustWatch)
+  localStorage.setItem('mustWatch', JSON.stringify(mustWatch))
+  const addToMustWatch = (movieId) => true
+
   return (
     <PageTemplate
       title="Upcoming Movies"
       movies={movies}
       action={(movie) => {
-        return <AddToPlaylistIcon movie={movie} />;
+        return <AddToMustWatchIcon movie={movie} />;
       }}
     />
   );
