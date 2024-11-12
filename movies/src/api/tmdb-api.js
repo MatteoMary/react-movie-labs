@@ -71,7 +71,7 @@ export const getMovie = (args) => {
 
   export const getUpcomingMovies = () => {
     return fetch(
-      `https://api.themoviedb.org/3/movie/upcoming?api_key=0a7c7be56d0e54dc71634c38f5518117&language=en-US&page=1`
+      `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1`
     ).then((response) => {
       if (!response.ok) {
         return response.json().then((error) => {
@@ -83,6 +83,30 @@ export const getMovie = (args) => {
       throw error;
     });
   };
+
+  export const getPopularActors = () => {
+    return fetch(
+      `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1`
+    ).then((response) => {
+      if (!response.ok) {
+        return response.json().then((error) => {
+          throw new Error(error.status_message || "Failed to fetch actors");
+        });
+      }
+      return response.json();
+    }).catch((error) => {
+      throw error;
+    });
+  };
+
+//export const getPopularActors = async () => {
+ // const response = await fetch("https://api.themoviedb.org/3/person/popular?api_key=YOUR_API_KEY&language=en-US");
+ // if (!response.ok) {
+   // throw new Error("Failed to fetch actors");
+  //}
+  //return response.json();
+//};
+
 
   export const getMovieReviews = ({ queryKey }) => {
     const [, idPart] = queryKey;
