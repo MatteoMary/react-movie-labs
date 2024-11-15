@@ -1,9 +1,9 @@
 import React from "react";
 import { useQuery } from "react-query";
 import { getActors } from "../api/tmdb-api";
+import PageTemplate from "../components/templateMovieListPage";
 import Spinner from "../components/spinner";
-import Grid from "@mui/material/Grid2";
-import ActorCard from "../components/actorCard";
+import ActorCard from "../components/cardIcons/actorCard";
 
 const ActorsPage = () => {
   const { data, error, isLoading, isError } = useQuery("actors", getActors);
@@ -19,13 +19,11 @@ const ActorsPage = () => {
   const actors = data.results;
 
   return (
-    <Grid container spacing={2} sx={{ padding: "20px" }}>
-      {actors.map((actor) => (
-        <Grid key={actor.id} xs={12} sm={6} md={4} lg={3}>
-          <ActorCard actor={actor} />
-        </Grid>
-      ))}
-    </Grid>
+    <PageTemplate
+      title="Popular Actors"
+      movies={actors} // Reuse the "movies" prop to pass actor data
+      action={(actor) => <ActorCard actor={actor} />}
+    />
   );
 };
 
