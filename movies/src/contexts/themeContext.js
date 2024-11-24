@@ -21,6 +21,7 @@ export const ThemeContextProvider = ({ children }) => {
       }),
     [mode]
   );
+  
 
   return (
     <ThemeContext.Provider value={{ mode, toggleTheme }}>
