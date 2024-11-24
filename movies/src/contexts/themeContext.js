@@ -6,26 +6,28 @@ export const ThemeContext = createContext();
 export const ThemeContextProvider = ({ children }) => {
   const [mode, setMode] = useState("light");
 
+  // Toggle between light and dark theme
   const toggleTheme = () => {
     setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
   };
 
+  // Create a theme based on the current mode
   const theme = useMemo(
     () =>
       createTheme({
         palette: {
-          mode,
-        },
-        typography: {
-          fontFamily: "Roboto, Arial, sans-serif",
+          mode: mode,
         },
       }),
     [mode]
   );
 
   return (
-    <ThemeContext.Provider value={{ toggleTheme, mode }}>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    <ThemeContext.Provider value={{ mode, toggleTheme }}>
+      <ThemeProvider theme={theme}>
+        {children}
+      </ThemeProvider>
     </ThemeContext.Provider>
   );
 };
+
